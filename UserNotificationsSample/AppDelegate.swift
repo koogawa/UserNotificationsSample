@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import UserNotifications
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        UNUserNotificationCenter.current().requestAuthorization([.alert, .sound, .badge]) {
+            (granted, error) in
+            // ...
+            print(granted, error)
+        }
+
+        UIApplication.shared().registerForRemoteNotifications()
+        print(UIApplication.shared().isRegisteredForRemoteNotifications())
+
+        FIRApp.configure()
+
         return true
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.unknown)
+        print("Device Token:", deviceToken)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
