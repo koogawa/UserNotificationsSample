@@ -35,15 +35,19 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         }
     }
 
+    // Called when tap notification
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: () -> Void) {
+        print(#function)
         completionHandler()
     }
 
+    // Called when receive remote/local notification
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
+        print(#function)
         completionHandler([.alert, .sound])
     }
     
